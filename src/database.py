@@ -1,14 +1,8 @@
 from typing import AsyncIterator
 
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey, String, select
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import (
-    DeclarativeBase,
-    Mapped,
-    MappedAsDataclass,
-    mapped_column,
-    relationship,
-)
+from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, mapped_column, relationship
 
 
 class Base(DeclarativeBase):
@@ -35,6 +29,20 @@ class Book(MappedAsDataclass, Base):
 
 
 engine = create_async_engine("sqlite+aiosqlite:///db.sqlite3", echo=True)
+
+
+async def init_db():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    async with AsyncSession(engine) as session:
+        authors = await session.scalars(select(Author))
+        if not authors.first():
+            author1 = Author(id=None, name="夏目漱石", books=[])
+            author2 = Author(id=None, name="泉鏡花", books=[])
+            book1 = Book(id=None, name="坊っちゃん", author_id=None, author=author1)
+            book2 = Book(id=None, name="高野聖", author_id=None, author=author2)
+            session.add_all([author1, author2, book1, book2])
+            await session.commit()
 
 
 async def get_db() -> AsyncIterator[AsyncSession]:

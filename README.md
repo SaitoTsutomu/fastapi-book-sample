@@ -18,12 +18,12 @@ https://github.com/SaitoTsutomu/fastapi-book-sample
 | 著者（`Author`） | ID（`id`）、名前（`name`）、書籍（`books`）                         |
 | 書籍（`Book`）   | ID（`id`）、名前（`name`）、著者ID（`author_id`）、著者（`author`） |
 
-- `Book.author_id`は、`Author.id`の外部キーです。
-- `Author.books`と`Book.author`は、リレーション用です。
+- `Book.author_id`は、`Author.id`の外部キー
+- `Author.books`と`Book.author`は、リレーション用
 
 ## 機能
 
-2つの表を操作する11の機能があります。
+2つの表を操作する12の機能があります。
 
 | method | パスとパラメーター            | 関数              | 説明           |
 | :----- | :---------------------------- | :---------------- | :------------- |
@@ -39,13 +39,13 @@ https://github.com/SaitoTsutomu/fastapi-book-sample
 | PUT    | `/books?book_id=*&name=*`     | `update_book()`   | 指定書籍の更新 |
 | DELETE | `/books?book_id=*`            | `delete_book()`   | 指定書籍の削除 |
 
-- 著者と書籍が親子構造になっています
-- 書籍を追加するには、親となる著者が必要です
-- 指定著者を削除すると、子供である書籍も削除されます
+- 著者と書籍が親子構造になっている
+- 書籍を追加するには、親となる著者が必要
+- 指定著者を削除すると、子供である書籍も削除される
 
 ## 環境構築
 
-`Python 3.11`で動作します。[Poetry](https://python-poetry.org/)が必要です。
+`Python 3.12`で動作します。[Poetry](https://python-poetry.org/)が必要です。
 以下のようにしてFastAPIの仮想環境を作成します。
 
 ```shell
@@ -79,11 +79,11 @@ poetry run uvicorn src.main:app --host 0.0.0.0 --reload
 
 APIは`src`ディレクトリにあり、下記の5つのファイルからなります。
 
-- `main.py`：FastAPIのインスタンス（app）を作成しています。
-- `database.py`：[SQLAlchemy ORM](https://docs.sqlalchemy.org/en/20/orm/)のクラスとセッションを返す関数（get_db）を定義しています。
-- `functions.py`：データベースを操作する11機能を定義しています。
-- `schemas.py`：APIで扱うpydanticのクラスを定義しています。
-- `routers.py`：パスオペレーション関数を定義しています。
+- `main.py`：FastAPIのインスタンス（app）を作成
+- `database.py`：[SQLAlchemy ORM](https://docs.sqlalchemy.org/en/20/orm/)のクラスとセッションを返す関数（get_db）を定義
+- `functions.py`：データベースを操作する12機能を定義
+- `schemas.py`：APIで扱うpydanticのクラスを定義
+- `routers.py`：パスオペレーション関数を定義
 
 ### `main.py`（抜粋）
 
@@ -160,7 +160,7 @@ async def get_author(author_id: int, db: AsyncSession = Depends(get_db)) -> Auth
 
 ## pytestの実行
 
-下記のようにして、11の機能をテストします。
+下記のようにして、12の機能をテストします。
 
 ```shell
 poetry run pytest
@@ -224,7 +224,7 @@ class Author(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 ```
 
-## 参考
+## Qiitaの記事
 
 https://qiita.com/SaitoTsutomu/items/6fd5cd835a4b904a5a3e
 
