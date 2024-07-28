@@ -23,7 +23,7 @@ class AuthorGet(AuthorAdd):
 
 
 class AuthorGetWithBooks(AuthorGet):
-    books: list["Book"]
+    books: list["BookGet"]
 
 
 class AuthorUpdate(BaseModel):
@@ -49,7 +49,7 @@ class BookGet(BookAdd):
 
 
 class BookGetWithAuthor(BookGet):
-    author: Author
+    author: AuthorGet
 
 
 class BookUpdate(BaseModel):
