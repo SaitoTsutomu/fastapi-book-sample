@@ -1,15 +1,16 @@
 from typing import AsyncIterator
 
+import sqlalchemy.orm
 from sqlalchemy import ForeignKey, String, select
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
-class Base(DeclarativeBase):
+class Base(sqlalchemy.orm.DeclarativeBase):
     pass
 
 
-class Author(MappedAsDataclass, Base):
+class Author(sqlalchemy.orm.MappedAsDataclass, Base):
     __tablename__ = "author"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
@@ -19,7 +20,7 @@ class Author(MappedAsDataclass, Base):
     )
 
 
-class Book(MappedAsDataclass, Base):
+class Book(sqlalchemy.orm.MappedAsDataclass, Base):
     __tablename__ = "book"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)

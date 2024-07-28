@@ -16,6 +16,7 @@ sqlalchemy = "^2.0"
 pytest = "^8.3"
 pytest-asyncio = "^0"
 pytest-randomly = "^3.15"
+ruff = "^0"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

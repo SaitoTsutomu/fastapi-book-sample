@@ -1,20 +1,58 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel as BaseModel_
+from pydantic import ConfigDict
 
 
-class Author(BaseModel):
-    id: int
-    name: str
-
+class BaseModel(BaseModel_):
     model_config = ConfigDict(from_attributes=True)
 
 
-class Book(BaseModel):
-    id: int
+class AuthorBase(BaseModel):
     name: str
+
+
+class Author(AuthorBase):
+    id: int | None = None
+
+
+class AuthorAdd(AuthorBase):
+    pass
+
+
+class AuthorGet(AuthorAdd):
+    id: int
+
+
+class AuthorGetWithBooks(AuthorGet):
+    books: list["Book"]
+
+
+class AuthorUpdate(BaseModel):
+    id: int
+    name: str | None = None
+
+
+class BookBase(BaseModel):
+    name: str
+    author_id: int | None = None
+
+
+class Book(BookBase):
+    id: int | None = None
+
+
+class BookAdd(BookBase):
     author_id: int
 
-    model_config = ConfigDict(from_attributes=True)
+
+class BookGet(BookAdd):
+    id: int
 
 
-class BookDetails(Book):
+class BookGetWithAuthor(BookGet):
     author: Author
+
+
+class BookUpdate(BaseModel):
+    id: int
+    name: str | None = None
+    author_id: int | None = None
