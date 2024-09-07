@@ -2,9 +2,9 @@ import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
-from src.database import Author, Base, Book, get_db
-from src.main import app
-from src.schemas import AuthorGet, BookGet
+from fastapi_book_sample.database import Author, Base, Book, get_db
+from fastapi_book_sample.main import app
+from fastapi_book_sample.schemas import AuthorGet, BookGet
 
 
 @pytest_asyncio.fixture

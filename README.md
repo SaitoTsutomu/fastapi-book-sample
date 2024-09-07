@@ -46,11 +46,11 @@ https://github.com/SaitoTsutomu/fastapi-book-sample
 
 ## 環境構築
 
-`Python 3.12`で動作します。[Poetry](https://python-poetry.org/)が必要です。
+`Python 3.12`で動作します。[uv](https://github.com/astral-sh/uv)が必要です。
 以下のようにしてFastAPIの仮想環境を作成します。
 
 ```shell
-poetry install
+uv venv
 ```
 
 ## FastAPIの起動
@@ -58,7 +58,7 @@ poetry install
 以下のようにしてFastAPIを起動します。
 
 ```shell
-poetry run uvicorn src.main:app --host 0.0.0.0 --reload
+uv run uvicorn fastapi_book_sample.main:app --host 0.0.0.0 --reload
 ```
 
 著者が空の時にダミーの著者と書籍を追加しています。
@@ -71,8 +71,9 @@ poetry run uvicorn src.main:app --host 0.0.0.0 --reload
 
 ## REST APIのファイル構成
 
-APIは`src`ディレクトリにあり、下記の5つのファイルからなります。
+APIは`src/fastapi_book_sample`ディレクトリにあり、下記の6つのファイルからなります。
 
+- `__init__.py`：パッケージ化するための空のファイル
 - `main.py`：FastAPIのインスタンス（app）を作成
 - `database.py`：[SQLAlchemy ORM](https://docs.sqlalchemy.org/en/20/orm/)のクラスとセッションを返す関数（get_db）を定義
 - `functions.py`：データベースを操作する12機能を定義
@@ -197,7 +198,7 @@ async def get_author(author_id: int, db: AsyncSession = Depends(get_db)) -> Auth
 下記のようにして、12の機能をテストします。
 
 ```shell
-poetry run pytest
+uv run pytest
 ```
 
 テストでは、別の`engine`を使うように、`get_db`を`get_test_db`で差し替えています。
