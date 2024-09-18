@@ -15,9 +15,7 @@ class Author(sqlalchemy.orm.MappedAsDataclass, Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String(16))
-    books: Mapped[list["Book"]] = relationship(
-        "Book", back_populates="author", cascade="all, delete"
-    )
+    books: Mapped[list["Book"]] = relationship("Book", back_populates="author", cascade="all, delete")
 
 
 class Book(sqlalchemy.orm.MappedAsDataclass, Base):

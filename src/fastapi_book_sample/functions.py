@@ -42,13 +42,13 @@ async def get_book(db: AsyncSession, *, book_id: int) -> Book | None:
 
 async def author_details(db: AsyncSession, *, author_id: int) -> Author | None:
     return await db.scalar(
-        select(Author).where(Author.id == author_id).options(selectinload(Author.books))
+        select(Author).where(Author.id == author_id).options(selectinload(Author.books)),
     )
 
 
 async def book_details(db: AsyncSession, *, book_id: int) -> Book | None:
     return await db.scalar(
-        select(Book).where(Book.id == book_id).options(selectinload(Book.author))
+        select(Book).where(Book.id == book_id).options(selectinload(Book.author)),
     )
 
 
@@ -63,9 +63,7 @@ async def update_author(db: AsyncSession, *, id: int, name: str | None) -> Autho
     return author_cur
 
 
-async def update_book(
-    db: AsyncSession, *, id: int, name: str | None, author_id: int | None
-) -> Book | None:
+async def update_book(db: AsyncSession, *, id: int, name: str | None, author_id: int | None) -> Book | None:
     book_cur = await db.get(Book, id)
     if not book_cur:
         return None

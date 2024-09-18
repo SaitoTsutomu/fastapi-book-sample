@@ -7,10 +7,9 @@ from .routers import router
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI):
     await init_db()  # setup
     yield
-    pass  # teardown
 
 
 app = FastAPI(lifespan=lifespan)
