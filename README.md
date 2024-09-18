@@ -58,8 +58,10 @@ uv venv
 以下のようにしてFastAPIを起動します。
 
 ```shell
-uv run uvicorn fastapi_book_sample.main:app --host 0.0.0.0 --reload
+uv run fastapi dev src/fastapi_book_sample/main.py
 ```
+
+※ 本番環境では、`dev`を`run`にします。
 
 著者が空の時にダミーの著者と書籍を追加しています。
 
