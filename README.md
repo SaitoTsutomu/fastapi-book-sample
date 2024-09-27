@@ -135,9 +135,6 @@ async def get_author(db: AsyncSession, *, author_id: int) -> Author | None:
 `schemas.py`は、パスオペレーション関数で扱う、pydanticのクラスを定義しています。
 
 ```python:src/schemas.py
-class BaseModel(BaseModel_):
-    model_config = ConfigDict(from_attributes=True)
-
 class AuthorBase(BaseModel):
     name: str
 

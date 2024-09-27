@@ -1,9 +1,4 @@
-from pydantic import BaseModel as BaseModel_
-from pydantic import ConfigDict
-
-
-class BaseModel(BaseModel_):
-    model_config = ConfigDict(from_attributes=True)
+from pydantic import BaseModel
 
 
 class AuthorBase(BaseModel):

@@ -5,7 +5,6 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 from fastapi_book_sample.database import Author, Base, Book, get_db
 from fastapi_book_sample.main import app
-from fastapi_book_sample.schemas import AuthorGet, BookGet
 
 
 @pytest_asyncio.fixture
@@ -42,48 +41,48 @@ async def client():
 # ダミーデータ
 
 
-async def add_author(db, author_data):
+async def add_author(db, author_data) -> dict:
     author = Author(**author_data, id=None, books=[])
     db.add(author)
     await db.commit()
     await db.refresh(author)
-    return AuthorGet.model_validate(author).model_dump()
+    return {"id": author.id, "name": author.name}
 
 
-async def add_book(db, book_data):
+async def add_book(db, book_data) -> dict:
     author = await db.get(Author, book_data["author_id"])
     book = Book(**book_data, id=None, author=author)
     db.add(book)
     await db.commit()
     await db.refresh(book)
-    return BookGet.model_validate(book).model_dump()
+    return {"id": book.id, "name": book.name, "author_id": book.author_id}
 
 
 @pytest.fixture
-def author1_data():
+def author1_data() -> dict:
     return {"name": "宮沢賢治"}
 
 
 @pytest.fixture
-def author2_data():
+def author2_data() -> dict:
     return {"name": "芥川龍之介"}
 
 
 @pytest_asyncio.fixture
-async def author1(db, author1_data):
+async def author1(db, author1_data) -> dict:
     return await add_author(db, author1_data)
 
 
 @pytest_asyncio.fixture
-async def author2(db, author2_data):
+async def author2(db, author2_data) -> dict:
     return await add_author(db, author2_data)
 
 
 @pytest.fixture
-def book1_data(author1):
+def book1_data(author1) -> dict:
     return {"name": "銀河鉄道の夜", "author_id": author1["id"]}
 
 
 @pytest_asyncio.fixture
-async def book1(db, book1_data):
+async def book1(db, book1_data) -> dict:
     return await add_book(db, book1_data)
